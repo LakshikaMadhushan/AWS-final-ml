@@ -2,17 +2,19 @@ from flask import Flask, request
 from oauthlib.uri_validate import host
 from werkzeug.utils import secure_filename
 from Object_detector import IdentityObject
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 object_finder = IdentityObject()
-
 
 @app.route("/api/v1/detect_object", methods=["POST"])
 def detect_object():
+
     result_res = []
     if request.method == "POST":
-        image_file = request.files["image"]
+
+        image_file = request.files["file"]
         print(image_file)
 
         file_name = secure_filename(filename=image_file.filename)
