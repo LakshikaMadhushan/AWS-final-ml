@@ -2,13 +2,16 @@ from flask import Flask, request
 from oauthlib.uri_validate import host
 from werkzeug.utils import secure_filename
 from Object_detector import IdentityObject
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+from flask import Flask,render_template,request,redirect
 
-app = Flask(__name__)
-CORS(app)
+application = Flask(__name__)
+cors=CORS(application)
 object_finder = IdentityObject()
 
-@app.route("/api/v1/detect_object", methods=["POST"])
+
+@application.route("/api/v1/detect_object", methods=["POST"])
+@cross_origin()
 def detect_object():
 
     result_res = []
@@ -45,4 +48,5 @@ def detect_object():
 
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=5000)
+    application.run(host="127.0.0.1", port=5000)
+    # application.run(host="")
